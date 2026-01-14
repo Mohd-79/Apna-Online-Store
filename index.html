@@ -1,273 +1,110 @@
-
-        .product-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
-        }
-
-        .img-box {
-            width: 100%;
-            height: 220px;
-            background-color: #f9f9f9;
-            overflow: hidden;
-            position: relative;
-        }
-
-        .img-box img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.5s ease;
-        }
-
-        .product-card:hover .img-box img {
-            transform: scale(1.1);
-        }
-
-        .product-info {
-            padding: 20px;
-            flex-grow: 1;
-            text-align: center;
-        }
-
-        .p-title {
-            font-size: 18px;
-            font-weight: 700;
-            color: #222;
-            margin-bottom: 10px;
-            height: 25px;
-            overflow: hidden;
-        }
-
-        .p-description {
-            font-size: 12px;
-            color: #777;
-            margin-bottom: 15px;
-            min-height: 40px;
-        }
-
-        .p-price {
-            font-size: 22px;
-            color: #ff0055;
-            font-weight: 800;
-            margin-bottom: 20px;
-        }
-
-        .order-now-btn {
-            background-color: #ff0055;
-            color: white;
-            border: none;
-            padding: 14px 25px;
-            font-size: 14px;
-            font-weight: 700;
-            border-radius: 12px;
-            cursor: pointer;
-            width: 100%;
-            text-transform: uppercase;
-            transition: background 0.3s ease;
-        }
-
-        .order-now-btn:hover {
-            background-color: #d90048;
-        }
-
-        /* Modal / Order Form Overlay */
-        #formOverlay {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.85);
-            z-index: 9999;
-            backdrop-filter: blur(8px);
-        }
-
-        .form-container {
-            background: #ffffff;
-            width: 90%;
-            max-width: 450px;
-            margin: 50px auto;
-            padding: 35px;
-            border-radius: 25px;
-            position: relative;
-            box-shadow: 0 25px 50px rgba(0,0,0,0.3);
-        }
-
-        .form-container h2 {
-            color: #ff0055;
-            font-size: 24px;
-            margin-bottom: 10px;
-            text-align: center;
-        }
-
-        .selected-item-info {
-            background: #fff0f5;
-            padding: 10px;
-            border-radius: 10px;
-            text-align: center;
-            font-weight: 600;
-            margin-bottom: 20px;
-            color: #d90048;
-        }
-
-        .input-group {
-            margin-bottom: 15px;
-        }
-
-        .input-group input, .input-group textarea {
-            width: 100%;
-            padding: 15px;
-            border: 2px solid #f0f0f0;
-            border-radius: 12px;
-            font-size: 14px;
-            outline: none;
-            transition: border-color 0.3s;
-        }
-
-        .input-group input:focus {
-            border-color: #ff0055;
-        }
-
-        .final-confirm-btn {
-            background-color: #28a745;
-            color: white;
-            border: none;
-            width: 100%;
-            padding: 16px;
-            border-radius: 12px;
-            font-weight: 700;
-            font-size: 16px;
-            cursor: pointer;
-            box-shadow: 0 5px 15px rgba(40, 167, 69, 0.3);
-        }
-
-        .cancel-btn {
-            display: block;
-            text-align: center;
-            margin-top: 15px;
-            color: #888;
-            text-decoration: none;
-            font-weight: 600;
-            cursor: pointer;
-        }
-
-        /* Animations */
-        @keyframes fadeInDown {
-            from { opacity: 0; transform: translateY(-20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* Mobile Responsive */
-        @media (max-width: 600px) {
-            .main-container { grid-template-columns: 1fr; }
-            .welcome-msg { font-size: 20px; }
-        }
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apna Online Store</title>
+    <style>
+        body { font-family: 'Segoe UI', Arial, sans-serif; margin: 0; background-color: #f8f9fa; color: #333; }
+        header { background: #ff0055; color: white; padding: 25px 15px; text-align: center; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .welcome-msg { font-size: 24px; font-weight: 800; margin-bottom: 5px; }
+        .brand-tag { font-size: 15px; font-weight: 600; text-transform: uppercase; opacity: 0.9; display: flex; align-items: center; justify-content: center; }
+        .sub-title { font-size: 13px; margin-top: 10px; opacity: 0.8; font-weight: 500; }
+        
+        .container { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; padding: 15px; max-width: 800px; margin: auto; }
+        .card { background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.08); display: flex; flex-direction: column; }
+        .card img { width: 100%; height: 160px; object-fit: cover; background: #f0f0f0; }
+        .info { padding: 12px; flex-grow: 1; display: flex; flex-direction: column; }
+        .product-name { font-weight: 700; font-size: 15px; margin-bottom: 5px; color: #111; height: 40px; }
+        .product-desc { font-size: 11px; color: #666; margin-bottom: 10px; line-height: 1.4; min-height: 32px; }
+        .price { font-size: 18px; color: #ff0055; font-weight: 800; margin-bottom: 12px; }
+        .buy-btn { background: #ff0055; color: white; border: none; padding: 12px; width: 100%; font-weight: bold; cursor: pointer; text-transform: uppercase; border-radius: 6px; font-size: 12px; }
+        
+        #orderModal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 10000; backdrop-filter: blur(3px); }
+        .modal-content { background: white; width: 88%; max-width: 380px; margin: 60px auto; padding: 25px; border-radius: 15px; position: relative; }
+        h3 { color:#ff0055; margin-top:0; }
+        input, textarea { width: 100%; padding: 12px; margin: 10px 0; border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box; }
+        .confirm-btn { background: #28a745; color: white; border: none; padding: 15px; width: 100%; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 16px; margin-top: 10px; }
+        .close-btn { background: #f8f9fa; border: 1px solid #ddd; padding: 10px; width: 100%; border-radius: 8px; margin-top: 10px; cursor: pointer; }
     </style>
 </head>
 <body>
 
-    <header>
-        <div class="welcome-msg">Welcome to Apna Online Store</div>
-        <div class="brand-tagline">🛒 Premium Shopping Experience</div>
-        <div class="header-sub-text">Discover high-quality products at unbeatable prices. Your satisfaction is our top priority.</div>
-    </header>
+<header>
+    <div class="welcome-msg">Welcome to Apna Online Store</div>
+    <div class="brand-tag">🛒 Premium Shopping Experience</div>
+    <div class="sub-title">Your One-Stop Shop for Smart Online Deals</div>
+</header>
 
-    <div class="main-container">
-        <div class="product-card">
-            <div class="img-box">
-                <img src="https://i.ibb.co/dJ1j5x5N/ms-5sg2j-512-383857316.jpg" alt="Premium Shirt">
-            </div>
-            <div class="product-info">
-                <div class="p-title">Premium Slim Fit Shirt</div>
-                <div class="p-description">Finest cotton fabric designed for comfort and professional style.</div>
-                <div class="p-price">₹299</div>
-                <button class="order-now-btn" onclick="openForm('Premium Slim Fit Shirt', '₹299')">Buy Now</button>
-            </div>
-        </div>
-
-        <div class="product-card">
-            <div class="img-box">
-                <img src="https://i.ibb.co/ycM4Gxhj/ms-yb9ft-512-661723855.jpg" alt="Earbuds">
-            </div>
-            <div class="product-info">
-                <div class="p-title">Premium Earbuds</div>
-                <div class="p-description">Crystal clear sound with ergonomic design for all-day listening.</div>
-                <div class="p-price">₹249</div>
-                <button class="order-now-btn" onclick="openForm('Premium Earbuds', '₹249')">Buy Now</button>
-            </div>
-        </div>
-
-        <div class="product-card">
-            <div class="img-box">
-                <img src="https://i.ibb.co/MxdLKNfd/ms-cdaid-512-324333326.jpg" alt="Classic Watch">
-            </div>
-            <div class="product-info">
-                <div class="p-title">Classic Analog Watch</div>
-                <div class="p-description">Elegant timepiece with a leather strap, suitable for every occasion.</div>
-                <div class="p-price">₹149</div>
-                <button class="order-now-btn" onclick="openForm('Classic Analog Watch', '₹149')">Buy Now</button>
-            </div>
-        </div>
-
-        <div class="product-card">
-            <div class="img-box">
-                <img src="https://i.ibb.co/cSHTphdr/ms-lyzbz-512-521355828.jpg" alt="Men's Perfume">
-            </div>
-            <div class="product-info">
-                <div class="p-title">Men's Luxury Perfume (Pack of 4)</div>
-                <div class="p-description">A set of 4 long-lasting premium fragrances crafted for modern men.</div>
-                <div class="p-price">₹249</div>
-                <button class="order-now-btn" onclick="openForm('Men Luxury Perfume (Pack of 4)', '₹249')">Buy Now</button>
-            </div>
+<div class="container">
+    <div class="card">
+        <img src="https://i.ibb.co/dJ1j5x5N/ms-5sg2j-512-383857316.jpg">
+        <div class="info">
+            <div class="product-name">Premium Slim Fit Shirt</div>
+            <div class="product-desc">High-quality cotton fabric for a comfortable & stylish look.</div>
+            <div class="price">₹299</div>
+            <button class="buy-btn" onclick="openOrder('Premium Slim Fit Shirt', '₹299')">BUY NOW</button>
         </div>
     </div>
 
-    <div id="formOverlay">
-        <div class="form-container">
-            <h2>Complete Your Order</h2>
-            <div id="itemDisplay" class="selected-item-info"></div>
-            
-            <form action="https://formspree.io/f/mreebzpa" method="POST">
-                <input type="hidden" name="Selected_Product" id="hiddenPName">
-                <input type="hidden" name="Price" id="hiddenPrice">
-                
-                <div class="input-group">
-                    <input type="text" name="Full_Name" placeholder="Enter Your Full Name" required>
-                </div>
-                <div class="input-group">
-                    <textarea name="Shipping_Address" rows="3" placeholder="Full Address with PIN Code" required></textarea>
-                </div>
-                <div class="input-group">
-                    <input type="tel" name="Phone_Number" placeholder="WhatsApp / Mobile Number" required>
-                </div>
-                
-                <button type="submit" class="final-confirm-btn">Confirm Order (COD)</button>
-            </form>
-            <div class="cancel-btn" onclick="closeForm()">Cancel & Go Back</div>
+    <div class="card">
+        <img src="https://i.ibb.co/ycM4Gxhj/ms-yb9ft-512-661723855.jpg">
+        <div class="info">
+            <div class="product-name">Premium Earbuds</div>
+            <div class="product-desc">Crystal clear sound with deep bass and ergonomic design.</div>
+            <div class="price">₹249</div>
+            <button class="buy-btn" onclick="openOrder('Premium Earbuds', '₹249')">BUY NOW</button>
         </div>
     </div>
 
-    <script>
-        function openForm(name, price) {
-            document.getElementById('hiddenPName').value = name;
-            document.getElementById('hiddenPrice').value = price;
-            document.getElementById('itemDisplay').innerText = "Ordering: " + name + " (" + price + ")";
-            document.getElementById('formOverlay').style.display = 'block';
-        }
+    <div class="card">
+        <img src="https://i.ibb.co/MxdLKNfd/ms-cdaid-512-324333326.jpg">
+        <div class="info">
+            <div class="product-name">Classic Analog Watch</div>
+            <div class="product-desc">Elegant dial design with premium straps for a timeless look.</div>
+            <div class="price">₹149</div>
+            <button class="buy-btn" onclick="openOrder('Classic Analog Watch', '₹149')">BUY NOW</button>
+        </div>
+    </div>
 
-        function closeForm() {
-            document.getElementById('formOverlay').style.display = 'none';
-        }
+    <div class="card">
+        <img src="https://i.ibb.co/cSHTphdr/ms-lyzbz-512-521355828.jpg">
+        <div class="info">
+            <div class="product-name">Men's Luxury Perfume (Pack of 4)</div>
+            <div class="product-desc">Long-lasting premium fragrances specially crafted for men.</div>
+            <div class="price">₹249</div>
+            <button class="buy-btn" onclick="openOrder('Men\'s Luxury Perfume (Pack of 4)', '₹249')">BUY NOW</button>
+        </div>
+    </div>
+</div>
 
-        // Close modal when clicking outside
-        window.onclick = function(event) {
-            var overlay = document.getElementById('formOverlay');
-            if (event.target == overlay) {
-                overlay.style.display = "none";
-            }
-        }
-    </script>
+<div id="orderModal">
+    <div class="modal-content">
+        <h3>Order Details</h3>
+        <p id="itemLabel" style="font-weight:bold; color:#555;"></p>
+        <form action="https://formspree.io/f/mreebzpa" method="POST">
+            <input type="hidden" name="Product_Name" id="pName">
+            <input type="hidden" name="Product_Price" id="pPrice">
+            <input type="text" name="Customer_Name" placeholder="Full Name" required>
+            <textarea name="Address" rows="3" placeholder="Shipping Address with PIN Code" required></textarea>
+            <input type="tel" name="Mobile" placeholder="Mobile Number" required>
+            <button type="submit" class="confirm-btn">CONFIRM ORDER</button>
+        </form>
+        <button class="close-btn" onclick="closeOrder()">CANCEL</button>
+    </div>
+</div>
+
+<script>
+    function openOrder(name, price) {
+        document.getElementById('pName').value = name;
+        document.getElementById('pPrice').value = price;
+        document.getElementById('itemLabel').innerText = name + " - " + price;
+        document.getElementById('orderModal').style.display = 'block';
+    }
+    function closeOrder() {
+        document.getElementById('orderModal').style.display = 'none';
+    }
+</script>
 
 </body>
 </html>
