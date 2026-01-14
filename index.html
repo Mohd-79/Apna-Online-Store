@@ -94,22 +94,99 @@
 <script>
     function openOrder(name, price) {
         document.getElementById('pName').value = name;
-        document.getElementById('pPrice').value = price;
-        document.getElementById('itemLabel').innerText = name + " - " + price;
-        document.getElementById('orderModal').style.display = 'block';
-    }
-
-    function closeOrder() {
-        document.getElementById('orderModal').style.display = 'none';
-    }
-
-    window.onclick = function(event) {
-        var modal = document.getElementById('orderModal');
-        if (event.target == modal) {
-            modal.style.display = "none";
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apna Online Store</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 0; background-color: #f7f7f7; color: #333; }
+        header { background: #ff0055; color: white; padding: 15px; text-align: center; box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
+        .main-title { font-size: 24px; font-weight: bold; margin: 0; }
+        .sub-title { font-size: 14px; margin-top: 5px; font-weight: bold; }
+        
+        .container { 
+            display: grid; 
+            grid-template-columns: 1fr 1fr; 
+            gap: 10px; 
+            padding: 10px; 
         }
-    }
-</script>
+        
+        .card { background: white; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 5px rgba(0,0,0,0.1); text-align: center; display: flex; flex-direction: column; }
+        .card img { width: 100%; height: 160px; object-fit: cover; background: #eee; border-bottom: 1px solid #ddd; }
+        .info { padding: 10px; flex-grow: 1; }
+        .price { font-size: 18px; color: #ff0055; font-weight: bold; margin-bottom: 8px; }
+        .buy-btn { background: #ff0055; color: white; border: none; padding: 12px; width: 100%; font-weight: bold; cursor: pointer; text-transform: uppercase; border-radius: 4px; display: block; }
+        
+        /* Order System Popup */
+        #orderModal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 10000; }
+        .modal-content { background: white; width: 85%; max-width: 350px; margin: 40px auto; padding: 20px; border-radius: 12px; box-shadow: 0 5px 15px rgba(0,0,0,0.5); position: relative; }
+        h3 { color:#ff0055; margin-top:0; }
+        input, textarea { width: 100%; padding: 12px; margin: 10px 0; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box; font-size: 14px; }
+        .confirm-btn { background: #28a745; color: white; border: none; padding: 15px; width: 100%; border-radius: 5px; font-weight: bold; cursor: pointer; font-size: 16px; margin-top: 10px; }
+        .close-btn { background: #f1f1f1; border: none; padding: 10px; width: 100%; border-radius: 5px; margin-top: 10px; cursor: pointer; color: #333; font-weight: bold; }
+    </style>
+</head>
+<body>
 
-</body>
-</html>
+<header>
+    <div class="main-title">APNA ONLINE STORE</div>
+    <div class="sub-title">Smart Deals Online</div>
+</header>
+
+<div class="container">
+    <div class="card">
+        <img src="https://i.ibb.co/dJ1j5x5N/ms-5sg2j-512-383857316.jpg" alt="Premium Shirt">
+        <div class="info">
+            <div class="price">₹299</div>
+            <button class="buy-btn" onclick="openOrder('Premium Shirt', '₹299')">BUY NOW</button>
+        </div>
+    </div>
+
+    <div class="card">
+        <img src="https://i.ibb.co/ycM4Gxhj/ms-yb9ft-512-661723855.jpg" alt="Wireless Earbuds">
+        <div class="info">
+            <div class="price">₹249</div>
+            <button class="buy-btn" onclick="openOrder('Wireless Earbuds', '₹249')">BUY NOW</button>
+        </div>
+    </div>
+
+    <div class="card">
+        <img src="https://i.ibb.co/MxdLKNfd/ms-cdaid-512-324333326.jpg" alt="Smart Watch">
+        <div class="info">
+            <div class="price">₹149</div>
+            <button class="buy-btn" onclick="openOrder('Smart Watch', '₹149')">BUY NOW</button>
+        </div>
+    </div>
+
+    <div class="card">
+        <img src="https://i.ibb.co/cSHTphdr/ms-lyzbz-512-521355828.jpg" alt="Perfume Combo">
+        <div class="info">
+            <div class="price">₹249</div>
+            <button class="buy-btn" onclick="openOrder('Perfume Combo', '₹249')">BUY NOW</button>
+        </div>
+    </div>
+</div>
+
+<div id="orderModal">
+    <div class="modal-content">
+        <h3>Order Details</h3>
+        <p id="itemLabel" style="font-weight:bold; color:#555;"></p>
+        <form action="https://formspree.io/f/smartdeals.online.in@gmail.com" method="POST">
+            <input type="hidden" name="Product_Name" id="pName">
+            <input type="hidden" name="Product_Price" id="pPrice">
+            
+            <input type="text" name="Customer_Name" placeholder="Enter Full Name" required>
+            <textarea name="Address" rows="3" placeholder="Full Address with PIN Code" required></textarea>
+            <input type="tel" name="Mobile" placeholder="Mobile Number" required>
+            
+            <button type="submit" class="confirm-btn">CONFIRM ORDER</button>
+        </form>
+        <button class="close-btn" onclick="closeOrder()">CANCEL</button>
+    </div>
+</div>
+
+<script>
+    function openOrder(name, price) {
+        document.getElementById('pName').value = name;
