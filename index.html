@@ -3,211 +3,205 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Apna Store | Official</title>
+    <title>Apna Store | Premium Verified</title>
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
-        body { background-color: #f8fafc; color: #1e293b; }
+        /* Modern Design System */
+        :root { --primary: #ff0055; --success: #00c853; --bg: #f4f7f6; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+        body { background-color: var(--bg); color: #333; }
 
-        header {
-            background: #ff0055;
-            color: white;
-            padding: 60px 20px;
-            text-align: center;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-        }
-        .welcome-msg { font-size: 34px; font-weight: 800; }
-        .tagline { 
-            font-size: 18px; margin-top: 10px; font-weight: 600;
-            background: rgba(255,255,255,0.2); display: inline-block;
-            padding: 6px 20px; border-radius: 50px;
-        }
-        .quotation {
-            font-size: 15px; margin-top: 20px; font-style: italic;
-            opacity: 0.9; max-width: 700px; margin-left: auto; margin-right: auto;
-        }
+        header { background: var(--primary); color: white; padding: 60px 20px; text-align: center; box-shadow: 0 5px 20px rgba(255,0,85,0.3); }
+        .welcome-msg { font-size: 38px; font-weight: 900; }
+        .quotation { font-size: 16px; margin-top: 12px; font-style: italic; opacity: 0.95; letter-spacing: 0.5px; }
 
-        /* Side-by-Side Professional Grid (4 Products) */
-        .store-container { 
+        /* New Side-by-Side Grid Layout */
+        .main-wrapper { max-width: 1300px; margin: 40px auto; padding: 0 20px; }
+        .store-grid { 
             display: grid; 
-            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); 
-            gap: 25px; padding: 40px 20px; max-width: 1200px; margin: auto; 
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
+            gap: 30px; 
         }
 
-        .product-card {
-            background: white; border-radius: 20px; overflow: hidden;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.05); transition: 0.3s;
-            display: flex; flex-direction: column; border: 1px solid #f1f5f9;
+        .card { 
+            background: white; border-radius: 25px; overflow: hidden; 
+            box-shadow: 0 15px 35px rgba(0,0,0,0.05); transition: 0.4s; 
+            border: 1px solid #eee; display: flex; flex-direction: column;
         }
-        .product-card:hover { transform: translateY(-10px); }
-
-        .img-container { width: 100%; height: 280px; background: #f1f5f9; }
-        .img-container img { width: 100%; height: 100%; object-fit: cover; }
-
-        .content { padding: 20px; text-align: center; flex-grow: 1; }
-        .p-title { font-weight: 700; font-size: 18px; margin-bottom: 10px; }
-        .p-price { font-size: 24px; color: #ff0055; font-weight: 800; margin-bottom: 15px; }
-
-        .buy-now-trigger {
-            background: #ff0055; color: white; border: none; padding: 15px;
-            width: 100%; font-weight: 700; border-radius: 12px; cursor: pointer;
-        }
-
-        /* Modal & Live Validation */
-        #formModal {
-            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(15, 23, 42, 0.9); z-index: 9999; backdrop-filter: blur(8px);
-        }
-        .modal-body {
-            background: white; width: 92%; max-width: 480px;
-            margin: 30px auto; padding: 35px; border-radius: 24px;
-        }
-
-        .input-group { margin-bottom: 20px; text-align: left; }
-        label { font-size: 13px; font-weight: 700; color: #64748b; margin-bottom: 5px; display: block; }
+        .card:hover { transform: translateY(-12px); box-shadow: 0 20px 40px rgba(0,0,0,0.1); }
         
-        input, textarea {
-            width: 100%; padding: 13px; border: 2.5px solid #e2e8f0; 
-            border-radius: 12px; outline: none; transition: 0.3s;
+        .card-img { width: 100%; height: 300px; background: #fafafa; position: relative; }
+        .card-img img { width: 100%; height: 100%; object-fit: cover; }
+        
+        .card-body { padding: 25px; text-align: center; }
+        .card-title { font-size: 20px; font-weight: 700; color: #222; margin-bottom: 10px; }
+        .card-price { font-size: 28px; color: var(--primary); font-weight: 800; margin-bottom: 20px; }
+
+        .order-btn { 
+            background: var(--primary); color: white; border: none; padding: 16px; 
+            width: 100%; font-weight: 700; border-radius: 15px; cursor: pointer; font-size: 16px;
+            transition: 0.3s;
         }
 
-        /* Live Message Styles */
-        .v-msg { font-size: 12px; margin-top: 5px; font-weight: 700; display: block; }
-        .v-err { color: #ef4444; }
-        .v-ok { color: #10b981; }
+        /* Verified Form Modal */
+        #orderOverlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 10000; backdrop-filter: blur(10px); }
+        .form-container { background: white; width: 95%; max-width: 500px; margin: 30px auto; padding: 40px; border-radius: 30px; position: relative; }
 
-        .final-btn {
-            background: #10b981; color: white; border: none; padding: 18px;
-            width: 100%; border-radius: 12px; font-weight: 800; font-size: 18px;
-            cursor: pointer; opacity: 0.4; pointer-events: none; transition: 0.3s;
+        .field-group { margin-bottom: 20px; text-align: left; }
+        .field-group label { font-size: 14px; font-weight: 700; color: #555; margin-bottom: 8px; display: block; }
+        input, textarea { width: 100%; padding: 15px; border: 2px solid #f0f0f0; border-radius: 15px; outline: none; transition: 0.3s; font-size: 16px; background: #f9f9f9; }
+        input:focus, textarea:focus { border-color: var(--primary); background: white; }
+
+        /* Validation Alerts */
+        .hint { font-size: 12px; font-weight: 700; margin-top: 6px; display: block; height: 15px; }
+        .msg-error { color: #e91e63; }
+        .msg-success { color: #00c853; }
+
+        .submit-btn { 
+            background: var(--success); color: white; border: none; padding: 20px; 
+            width: 100%; border-radius: 18px; font-weight: 800; font-size: 18px; 
+            cursor: pointer; opacity: 0.3; pointer-events: none; transition: 0.4s;
         }
-        .final-btn.active { opacity: 1; pointer-events: auto; }
+        .submit-btn.ready { opacity: 1; pointer-events: auto; transform: scale(1.02); box-shadow: 0 10px 20px rgba(0,200,83,0.3); }
+
+        .close-link { text-align: center; margin-top: 20px; color: #aaa; cursor: pointer; font-weight: 600; display: block; }
     </style>
 </head>
 <body>
 
 <header>
     <div class="welcome-msg">Apna Store Official</div>
-    <div class="tagline">🛒 Smart Deals Online</div>
-    <p class="quotation">"Premium Quality Meets Affordable Prices. Your satisfaction is our top priority."</p>
+    <p class="quotation">"The ultimate destination for premium lifestyle products. Verified Quality."</p>
 </header>
 
-<div class="store-container">
-    <div class="product-card">
-        <div class="img-container"><img src="https://i.ibb.co/dJ1j5x5N/ms-5sg2j-512-383857316.jpg"></div>
-        <div class="content">
-            <div class="p-title">Premium Slim Fit Shirt</div>
-            <div class="p-price">₹299</div>
-            <button class="buy-now-trigger" onclick="openOrder('Premium Slim Fit Shirt')">ORDER NOW</button>
+<div class="main-wrapper">
+    <div class="store-grid">
+        <div class="card">
+            <div class="card-img"><img src="https://i.ibb.co/dJ1j5x5N/ms-5sg2j-512-383857316.jpg"></div>
+            <div class="card-body">
+                <div class="card-title">Premium Slim Shirt</div>
+                <div class="card-price">₹299</div>
+                <button class="order-btn" onclick="openShop('Premium Slim Shirt')">BUY NOW</button>
+            </div>
         </div>
-    </div>
-    <div class="product-card">
-        <div class="img-container"><img src="https://m.media-amazon.com/images/I/61Nl-XpLh7L._SL1500_.jpg"></div>
-        <div class="content">
-            <div class="p-title">Wireless Airbuds Z2</div>
-            <div class="p-price">₹499</div>
-            <button class="buy-now-trigger" onclick="openOrder('Wireless Airbuds Z2')">ORDER NOW</button>
+
+        <div class="card">
+            <div class="card-img"><img src="https://m.media-amazon.com/images/I/61Nl-XpLh7L._SL1500_.jpg"></div>
+            <div class="card-body">
+                <div class="card-title">Wireless Airbuds Z2</div>
+                <div class="card-price">₹499</div>
+                <button class="order-btn" onclick="openShop('Wireless Airbuds Z2')">BUY NOW</button>
+            </div>
         </div>
-    </div>
-    <div class="product-card">
-        <div class="img-container"><img src="https://m.media-amazon.com/images/I/71N-Wn7WlBL._SL1500_.jpg"></div>
-        <div class="content">
-            <div class="p-title">Luxury French Perfume</div>
-            <div class="p-price">₹399</div>
-            <button class="buy-now-trigger" onclick="openOrder('Luxury French Perfume')">ORDER NOW</button>
+
+        <div class="card">
+            <div class="card-img"><img src="https://m.media-amazon.com/images/I/71N-Wn7WlBL._SL1500_.jpg"></div>
+            <div class="card-body">
+                <div class="card-title">Luxury French Perfume</div>
+                <div class="card-price">₹399</div>
+                <button class="order-btn" onclick="openShop('Luxury French Perfume')">BUY NOW</button>
+            </div>
         </div>
-    </div>
-    <div class="product-card">
-        <div class="img-container"><img src="https://m.media-amazon.com/images/I/71o8Q5h93AL._SL1500_.jpg"></div>
-        <div class="content">
-            <div class="p-title">Men's Classic Watch</div>
-            <div class="p-price">₹599</div>
-            <button class="buy-now-trigger" onclick="openOrder('Men's Classic Watch')">ORDER NOW</button>
+
+        <div class="card">
+            <div class="card-img"><img src="https://m.media-amazon.com/images/I/71o8Q5h93AL._SL1500_.jpg"></div>
+            <div class="card-body">
+                <div class="card-title">Men's Classic Watch</div>
+                <div class="card-price">₹599</div>
+                <button class="order-btn" onclick="openShop('Men\'s Classic Watch')">BUY NOW</button>
+            </div>
         </div>
     </div>
 </div>
 
-<div id="formModal">
-    <div class="modal-body">
-        <h2 style="text-align:center; margin-bottom:25px;">Shipping Details</h2>
-        <form id="orderForm">
-            <input type="hidden" id="pName" name="Product">
+<div id="orderOverlay">
+    <div class="form-container">
+        <h2 style="text-align:center; margin-bottom:25px; letter-spacing: -1px;">Verify Order Details</h2>
+        <form id="secureForm">
+            <input type="hidden" id="p_name" name="Selected_Product">
 
-            <div class="input-group">
-                <label>Full Name</label>
-                <input type="text" id="name" name="Name" placeholder="Your Name" oninput="validateAll()">
-                <span id="nameMsg" class="v-msg"></span>
+            <div class="field-group">
+                <label>Recipient Full Name</label>
+                <input type="text" id="v_name" name="Full_Name" placeholder="e.g., Rohit Kumar" oninput="verifyInputs()">
+                <span id="name_hint" class="hint"></span>
             </div>
 
-            <div class="input-group">
-                <label>Shipping Address</label>
-                <textarea id="addr" name="Address" rows="3" placeholder="Full Address" oninput="validateAll()"></textarea>
-                <span id="addrMsg" class="v-msg"></span>
+            <div class="field-group">
+                <label>Detailed Delivery Address</label>
+                <textarea id="v_addr" name="Address" rows="3" placeholder="House No, Street, Landmark, City" oninput="verifyInputs()"></textarea>
+                <span id="addr_hint" class="hint"></span>
             </div>
 
-            <div class="input-group">
-                <label>PIN Code</label>
-                <input type="number" id="pin" name="PIN" placeholder="6-digit PIN" oninput="lock(this, 6); validateAll()">
-                <span id="pinMsg" class="v-msg"></span>
+            <div class="field-group">
+                <label>6-Digit PIN Code</label>
+                <input type="number" id="v_pin" name="Pincode" placeholder="XXXXXX" oninput="enforceLimit(this, 6); verifyInputs()">
+                <span id="pin_hint" class="hint"></span>
             </div>
 
-            <div class="input-group">
-                <label>Mobile Number</label>
-                <input type="number" id="mob" name="Mobile" placeholder="10-digit Number" oninput="lock(this, 10); validateAll()">
-                <span id="mobMsg" class="v-msg"></span>
+            <div class="field-group">
+                <label>10-Digit Mobile Number</label>
+                <input type="number" id="v_mob" name="Mobile" placeholder="XXXXXXXXXX" oninput="enforceLimit(this, 10); verifyInputs()">
+                <span id="mob_hint" class="hint"></span>
             </div>
 
-            <button type="button" id="subBtn" class="final-btn" onclick="submitOrder()">PLACE ORDER (COD)</button>
+            <button type="button" id="finalSubmit" class="submit-btn" onclick="submitToEmail()">CONFIRM ORDER (COD)</button>
         </form>
-        <p style="text-align:center; margin-top:15px; cursor:pointer; color:#94a3b8;" onclick="closeModal()">Cancel</p>
+        <span class="close-link" onclick="closeShop()">Cancel and go back</span>
     </div>
 </div>
 
 <script>
-    function openOrder(n) {
-        document.getElementById('pName').value = n;
-        document.getElementById('formModal').style.display = 'block';
+    function openShop(item) { 
+        document.getElementById('p_name').value = item; 
+        document.getElementById('orderOverlay').style.display = 'block'; 
+    }
+    
+    function closeShop() { document.getElementById('orderOverlay').style.display = 'none'; }
+    
+    function enforceLimit(el, len) { if(el.value.length > len) el.value = el.value.slice(0, len); }
+
+    function verifyInputs() {
+        const nm = document.getElementById('v_name'), ad = document.getElementById('v_addr');
+        const pn = document.getElementById('v_pin'), mb = document.getElementById('v_mob');
+        const btn = document.getElementById('finalSubmit');
+
+        // New Logic: Name must have 2 parts (First Last) and No Junk like 'aaa'
+        const isNameValid = nm.value.trim().split(' ').length >= 2 && !/^(.)\1+$/.test(nm.value.trim());
+        
+        // New Logic: Address must have house number (digit) and city/area details
+        const isAddrValid = ad.value.trim().length >= 20 && /\d/.test(ad.value);
+
+        // New Logic: PIN & Mobile can't be common fake patterns
+        const fakeCheck = /^(.)\1{5,}$|123456|012345/;
+        const isPinValid = pn.value.length === 6 && !fakeCheck.test(pn.value);
+        
+        const fakeMob = /^(.)\1{9,}$|1234567890|0123456789/;
+        const isMobValid = mb.value.length === 10 && !fakeMob.test(mb.value);
+
+        showFeedback('name_hint', isNameValid, "Name Verified", "Full Name required (First & Last)", nm);
+        showFeedback('addr_hint', isAddrValid, "Address Verified", "Detailed address required (House No. / City)", ad);
+        showFeedback('pin_hint', isPinValid, "PIN Verified", "Enter a valid 6-digit PIN", pn);
+        showFeedback('mob_hint', isMobValid, "Number Verified", "Enter a valid 10-digit Number", mb);
+
+        if(isNameValid && isAddrValid && isPinValid && isMobValid) btn.classList.add('ready');
+        else btn.classList.remove('ready');
     }
 
-    function closeModal() { document.getElementById('formModal').style.display = 'none'; }
-
-    // Number Lock
-    function lock(el, max) { if (el.value.length > max) el.value = el.value.slice(0, max); }
-
-    function validateAll() {
-        const n = document.getElementById('name'), a = document.getElementById('addr');
-        const p = document.getElementById('pin'), m = document.getElementById('mob');
-        const btn = document.getElementById('subBtn');
-
-        const isN = n.value.trim().length >= 3;
-        const isA = a.value.trim().length >= 15;
-        const isP = p.value.length === 6;
-        const isM = m.value.length === 10;
-
-        feedback('nameMsg', isN, "Name Verified", "Enter at least 3 characters", n);
-        feedback('addrMsg', isA, "Address Verified", "Invalid Address: Detailed address required", a);
-        feedback('pinMsg', isP, "PIN Verified", "Not Valid PIN Code: 6 digits required", p);
-        feedback('mobMsg', isM, "Mobile Verified", "Invalid Number: 10 digits required", m);
-
-        if (isN && isA && isP && isM) btn.classList.add('active');
-        else btn.classList.remove('active');
-    }
-
-    function feedback(id, ok, sMsg, eMsg, input) {
+    function showFeedback(id, ok, sMsg, eMsg, input) {
         const el = document.getElementById(id);
-        if (input.value.length === 0) { el.innerHTML = ""; input.style.borderColor = "#e2e8f0"; return; }
-        if (ok) {
-            el.innerHTML = "✓ " + sMsg; el.className = "v-msg v-ok"; input.style.borderColor = "#10b981";
+        if(input.value === "") { el.innerHTML = ""; input.style.borderColor = "#f0f0f0"; return; }
+        if(ok) {
+            el.innerHTML = "✓ " + sMsg; el.className = "hint msg-success"; input.style.borderColor = "#00c853";
         } else {
-            el.innerHTML = "⚠ " + eMsg; el.className = "v-msg v-err"; input.style.borderColor = "#ef4444";
+            el.innerHTML = "⚠ " + eMsg; el.className = "hint msg-error"; input.style.borderColor = "#e91e63";
         }
     }
 
-    function submitOrder() {
-        alert("Success! Order Placed.");
-        const f = document.getElementById('orderForm');
-        f.action = "https://formspree.io/f/mreebzpa";
-        f.method = "POST";
-        f.submit();
+    function submitToEmail() {
+        alert("Verification Success! Your order is being processed.");
+        const form = document.getElementById('secureForm');
+        form.action = "https://formspree.io/f/mreebzpa";
+        form.method = "POST";
+        form.submit();
     }
 </script>
 </body>
