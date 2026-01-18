@@ -1,200 +1,188 @@
-        .content { 
-            padding: 20px; 
-            text-align: center; 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apna Store | Smart Deals Online</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Arial, sans-serif; }
+        body { background-color: #f7f9fc; color: #2d3436; line-height: 1.6; }
+
+        /* Premium Header Section */
+        header {
+            background: #ff0055;
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(255, 0, 85, 0.2);
         }
 
-        .p-title { 
-            font-weight: 700; 
-            font-size: 18px; 
-            color: #222; 
-            margin-bottom: 8px;
+        .welcome-msg { font-size: 28px; font-weight: 800; letter-spacing: -0.5px; }
+        .tagline { 
+            font-size: 16px; 
+            font-weight: 600; 
+            margin-top: 8px; 
+            background: rgba(255,255,255,0.2);
+            display: inline-block;
+            padding: 5px 20px;
+            border-radius: 50px;
         }
 
-        .p-price { 
-            font-size: 24px; 
-            color: #ff0055; 
-            font-weight: 800; 
-            margin-bottom: 20px;
+        .header-desc {
+            font-size: 14px;
+            margin-top: 15px;
+            opacity: 0.9;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+            font-style: italic;
         }
+
+        .trust-badges {
+            margin-top: 15px;
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+        .badge-item { background: white; color: #ff0055; padding: 3px 12px; border-radius: 4px; }
+
+        /* Product Grid */
+        .store-container { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); 
+            gap: 20px; padding: 25px; max-width: 950px; margin: auto; 
+        }
+
+        .product-card {
+            background: white; border-radius: 16px; overflow: hidden;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.05); transition: 0.3s;
+            display: flex; flex-direction: column; border: 1px solid #edf2f7;
+        }
+        .product-card:hover { transform: translateY(-8px); }
+
+        .img-container { width: 100%; height: 200px; background: #f1f1f1; }
+        .img-container img { width: 100%; height: 100%; object-fit: cover; }
+
+        .content { padding: 18px; text-align: center; flex-grow: 1; }
+        .p-title { font-weight: 700; font-size: 16px; color: #1a202c; margin-bottom: 6px; }
+        .p-price { font-size: 22px; color: #ff0055; font-weight: 800; margin-bottom: 15px; }
 
         .buy-now-trigger {
-            background: #ff0055; 
-            color: white; 
-            border: none; 
-            padding: 15px;
-            width: 100%; 
-            font-weight: 700; 
-            border-radius: 12px; 
-            cursor: pointer;
-            font-size: 16px;
-            transition: 0.3s;
+            background: #ff0055; color: white; border: none; padding: 14px;
+            width: 100%; font-weight: 700; border-radius: 10px; cursor: pointer;
         }
 
-        .buy-now-trigger:hover {
-            background: #cc0044;
-        }
-
-        /* Modal / Form Overlay */
+        /* Form Modal */
         #formModal {
-            display: none; 
-            position: fixed; 
-            top: 0; 
-            left: 0; 
-            width: 100%; 
-            height: 100%;
-            background: rgba(0,0,0,0.85); 
-            z-index: 10000; 
-            backdrop-filter: blur(8px);
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.8); z-index: 9999; backdrop-filter: blur(6px);
         }
 
         .modal-body {
-            background: white; 
-            width: 90%; 
-            max-width: 450px;
-            margin: 50px auto; 
-            padding: 35px; 
-            border-radius: 25px; 
-            text-align: center;
-            position: relative;
-            animation: slideUp 0.4s ease;
-        }
-
-        @keyframes slideUp {
-            from { transform: translateY(50px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
-        }
-
-        .selected-item {
-            background: #fff0f5;
-            padding: 15px;
-            border-radius: 12px;
-            color: #ff0055;
-            font-weight: 800;
-            margin-bottom: 20px;
-            border: 2px dashed #ff0055;
+            background: white; width: 92%; max-width: 420px;
+            margin: 40px auto; padding: 30px; border-radius: 20px; text-align: center;
         }
 
         input, textarea {
-            width: 100%; 
-            padding: 15px; 
-            margin-top: 15px;
-            border: 2px solid #f0f0f0; 
-            border-radius: 12px; 
-            outline: none;
-            font-size: 15px;
-            transition: 0.3s;
-        }
-
-        input:focus, textarea:focus {
-            border-color: #ff0055;
+            width: 100%; padding: 14px; margin-top: 15px;
+            border: 1.5px solid #e2e8f0; border-radius: 10px; outline: none;
         }
 
         .final-btn {
-            background: #27ae60; 
-            color: white; 
-            border: none; 
-            padding: 18px;
-            width: 100%; 
-            border-radius: 12px; 
-            font-weight: 800; 
-            font-size: 18px; 
-            cursor: pointer; 
-            margin-top: 25px;
-            box-shadow: 0 5px 15px rgba(39, 174, 96, 0.3);
-        }
-
-        .cancel-txt {
-            margin-top: 20px;
-            color: #888;
-            cursor: pointer;
-            font-weight: 600;
-            display: inline-block;
+            background: #2ecc71; color: white; border: none; padding: 16px;
+            width: 100%; border-radius: 10px; font-weight: 800; font-size: 16px; cursor: pointer; margin-top: 20px;
         }
     </style>
 </head>
 <body>
 
 <header>
-    <div class="welcome-msg">Apna Digital Store</div>
-    <div class="tagline">🔥 Fresh Deals Every Day! 🔥</div>
+    <div class="welcome-msg">Welcome to Apna Store</div>
+    <div class="tagline">🛒 Smart Deals Online</div>
+    <div class="header-desc">Best quality items at your doorstep.</div>
+    <div class="trust-badges">
+        <span class="badge-item">✓ Free Delivery</span>
+        <span class="badge-item">✓ Cash on Delivery</span>
+    </div>
 </header>
 
 <div class="store-container">
     <div class="product-card">
-        <div class="img-container"><img src="https://i.ibb.co/dJ1j5x5N/ms-5sg2j-512-383857316.jpg" alt="Item"></div>
+        <div class="img-container"><img src="https://i.ibb.co/dJ1j5x5N/ms-5sg2j-512-383857316.jpg"></div>
         <div class="content">
-            <div class="p-title">Premium Shirt</div>
+            <div class="p-title">Premium Slim Fit Shirt</div>
             <div class="p-price">₹299</div>
-            <button class="buy-now-trigger" onclick="openOrder('Premium Shirt', '₹299')">ORDER NOW</button>
+            <button class="buy-now-trigger" onclick="openOrder('Premium Slim Fit Shirt', '₹299')">Buy Now</button>
         </div>
     </div>
-
+    
     </div>
 
 <div id="formModal">
     <div class="modal-body">
-        <h2 style="margin-bottom:10px;">Confirm Shipping</h2>
-        <div id="itemShow" class="selected-item"></div>
+        <h2>Order Details</h2>
+        <div id="productDisplay" style="background:#fff5f7; padding:10px; margin:15px 0; border-radius:10px; color:#ff0055; font-weight:bold;"></div>
         
-        <form id="mainOrderForm">
-            <input type="hidden" id="prodName">
-            <input type="hidden" id="prodPrice">
+        <form id="orderForm">
+            <input type="hidden" name="Item" id="hiddenItem">
+            <input type="hidden" name="Price" id="hiddenPrice">
             
-            <input type="text" id="custName" placeholder="Full Name (कम से कम 3 अक्षर)">
-            <textarea id="custAddress" rows="3" placeholder="Full Address (House, Road, Area, City)"></textarea>
-            <input type="number" id="custZip" placeholder="6-Digit Pin Code">
-            <input type="number" id="custPhone" placeholder="10-Digit Mobile Number">
+            <input type="text" id="buyerName" name="Buyer_Name" placeholder="आपका पूरा नाम (Full Name)">
+            <textarea id="buyerAddress" name="Shipping_Address" rows="3" placeholder="पूरा पता (House No, Area, City)"></textarea>
+            <input type="number" id="zipCode" name="Zip_Code" placeholder="6 अंकों का पिन कोड (PIN Code)">
+            <input type="number" id="buyerContact" name="Contact" placeholder="10 अंकों का मोबाइल नंबर">
             
-            <button type="button" class="final-btn" onclick="processOrder()">PLACE ORDER (COD)</button>
+            <button type="button" class="final-btn" onclick="validateAndSend()">CONFIRM ORDER (COD)</button>
         </form>
-        <span class="cancel-txt" onclick="closeOrder()">NOT NOW</span>
+        <p style="text-align:center; margin-top:15px; cursor:pointer; color:#888;" onclick="closeModal()">Cancel</p>
     </div>
 </div>
 
 <script>
-    function openOrder(n, p) {
-        document.getElementById('prodName').value = n;
-        document.getElementById('prodPrice').value = p;
-        document.getElementById('itemShow').innerText = n + " — " + p;
+    function openOrder(name, price) {
+        document.getElementById('hiddenItem').value = name;
+        document.getElementById('hiddenPrice').value = price;
+        document.getElementById('productDisplay').innerText = name + " — " + price;
         document.getElementById('formModal').style.display = 'block';
     }
 
-    function closeOrder() {
+    function closeModal() {
         document.getElementById('formModal').style.display = 'none';
     }
 
-    function processOrder() {
-        // सारी वैल्यू को चेक करना
-        const nm = document.getElementById('custName').value.trim();
-        const ad = document.getElementById('custAddress').value.trim();
-        const zp = document.getElementById('custZip').value.trim();
-        const ph = document.getElementById('custPhone').value.trim();
-        const frm = document.getElementById('mainOrderForm');
+    function validateAndSend() {
+        var n = document.getElementById('buyerName').value.trim();
+        var a = document.getElementById('buyerAddress').value.trim();
+        var z = document.getElementById('zipCode').value.trim();
+        var p = document.getElementById('buyerContact').value.trim();
+        var form = document.getElementById('orderForm');
 
-        // कड़क चेकिंग (Rules)
-        if (nm.length < 3) {
-            alert("❌ कृपया अपना पूरा और सही नाम भरें।");
+        // हिंदी में चेतावनी (Alerts)
+        if (n.length < 3) {
+            alert("❌ कृपया सही नाम भरें (कम से कम 3 अक्षर)!");
             return;
         }
-        if (ad.length < 15) {
-            alert("❌ पता बहुत छोटा है! कृपया पूरा पता (मकान नंबर समेत) लिखें।");
+        if (a.length < 15) {
+            alert("❌ पता अधूरा है! कृपया मकान नंबर और शहर का नाम भी लिखें।");
             return;
         }
-        if (zp.length !== 6) {
-            alert("❌ पिन कोड सिर्फ 6 अंकों का होना चाहिए।");
+        if (z.length !== 6) {
+            alert("❌ पिन कोड गलत है! यह ठीक 6 अंकों का होना चाहिए।");
             return;
         }
-        if (ph.length !== 10) {
-            alert("❌ मोबाइल नंबर ठीक 10 अंकों का होना चाहिए।");
+        if (p.length !== 10) {
+            alert("❌ मोबाइल नंबर गलत है! 10 अंकों का नंबर डालें।");
             return;
         }
 
-        // अगर सब पास हो गया
-        alert("✅ बधाई हो! आपकी जानकारी सही है। ऑर्डर सबमिट हो रहा है...");
-        
-        frm.action = "https://formspree.io/f/mreebzpa";
-        frm.method = "POST";
-        frm.submit();
+        // सब सही होने पर
+        alert("✅ जानकारी सही है! आपका ऑर्डर भेजा जा रहा है...");
+        form.action = "https://formspree.io/f/mreebzpa";
+        form.method = "POST";
+        form.submit();
     }
 </script>
 
