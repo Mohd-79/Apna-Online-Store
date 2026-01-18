@@ -3,205 +3,196 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Apna Store | Premium Verified</title>
+    <title>Apna Store | Official</title>
     <style>
-        /* Modern Design System */
-        :root { --primary: #ff0055; --success: #00c853; --bg: #f4f7f6; }
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
-        body { background-color: var(--bg); color: #333; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { background-color: #f7f9fc; color: #2d3436; }
 
-        header { background: var(--primary); color: white; padding: 60px 20px; text-align: center; box-shadow: 0 5px 20px rgba(255,0,85,0.3); }
-        .welcome-msg { font-size: 38px; font-weight: 900; }
-        .quotation { font-size: 16px; margin-top: 12px; font-style: italic; opacity: 0.95; letter-spacing: 0.5px; }
-
-        /* New Side-by-Side Grid Layout */
-        .main-wrapper { max-width: 1300px; margin: 40px auto; padding: 0 20px; }
-        .store-grid { 
-            display: grid; 
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
-            gap: 30px; 
+        header {
+            background: #ff0055;
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
         }
 
-        .card { 
-            background: white; border-radius: 25px; overflow: hidden; 
-            box-shadow: 0 15px 35px rgba(0,0,0,0.05); transition: 0.4s; 
+        .welcome-msg { font-size: 32px; font-weight: 800; }
+        .tagline { 
+            font-size: 16px; margin-top: 8px; font-weight: 600;
+            background: rgba(255,255,255,0.2); display: inline-block;
+            padding: 5px 20px; border-radius: 50px;
+        }
+
+        .quotation {
+            font-size: 14px;
+            margin-top: 15px;
+            font-style: italic;
+            opacity: 0.9;
+        }
+
+        /* Products Grid - Side by Side */
+        .store-container { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); 
+            gap: 20px; padding: 40px 20px; max-width: 1200px; margin: auto; 
+        }
+
+        .product-card {
+            background: white; border-radius: 12px; overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1); text-align: center;
             border: 1px solid #eee; display: flex; flex-direction: column;
         }
-        .card:hover { transform: translateY(-12px); box-shadow: 0 20px 40px rgba(0,0,0,0.1); }
-        
-        .card-img { width: 100%; height: 300px; background: #fafafa; position: relative; }
-        .card-img img { width: 100%; height: 100%; object-fit: cover; }
-        
-        .card-body { padding: 25px; text-align: center; }
-        .card-title { font-size: 20px; font-weight: 700; color: #222; margin-bottom: 10px; }
-        .card-price { font-size: 28px; color: var(--primary); font-weight: 800; margin-bottom: 20px; }
 
-        .order-btn { 
-            background: var(--primary); color: white; border: none; padding: 16px; 
-            width: 100%; font-weight: 700; border-radius: 15px; cursor: pointer; font-size: 16px;
-            transition: 0.3s;
+        .img-box { width: 100%; height: 260px; background: #f1f1f1; }
+        .img-box img { width: 100%; height: 100%; object-fit: cover; }
+
+        .content { padding: 15px; flex-grow: 1; }
+        .p-price { font-size: 22px; color: #ff0055; font-weight: 800; margin-bottom: 15px; }
+
+        .buy-btn {
+            background: #ff0055; color: white; border: none; padding: 12px;
+            width: 100%; font-weight: 700; border-radius: 8px; cursor: pointer;
         }
 
-        /* Verified Form Modal */
-        #orderOverlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 10000; backdrop-filter: blur(10px); }
-        .form-container { background: white; width: 95%; max-width: 500px; margin: 30px auto; padding: 40px; border-radius: 30px; position: relative; }
-
-        .field-group { margin-bottom: 20px; text-align: left; }
-        .field-group label { font-size: 14px; font-weight: 700; color: #555; margin-bottom: 8px; display: block; }
-        input, textarea { width: 100%; padding: 15px; border: 2px solid #f0f0f0; border-radius: 15px; outline: none; transition: 0.3s; font-size: 16px; background: #f9f9f9; }
-        input:focus, textarea:focus { border-color: var(--primary); background: white; }
-
-        /* Validation Alerts */
-        .hint { font-size: 12px; font-weight: 700; margin-top: 6px; display: block; height: 15px; }
-        .msg-error { color: #e91e63; }
-        .msg-success { color: #00c853; }
-
-        .submit-btn { 
-            background: var(--success); color: white; border: none; padding: 20px; 
-            width: 100%; border-radius: 18px; font-weight: 800; font-size: 18px; 
-            cursor: pointer; opacity: 0.3; pointer-events: none; transition: 0.4s;
+        /* Modal & Live Validation */
+        #orderModal {
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.8); z-index: 9999;
         }
-        .submit-btn.ready { opacity: 1; pointer-events: auto; transform: scale(1.02); box-shadow: 0 10px 20px rgba(0,200,83,0.3); }
+        .modal-body {
+            background: white; width: 92%; max-width: 450px;
+            margin: 30px auto; padding: 30px; border-radius: 15px;
+        }
 
-        .close-link { text-align: center; margin-top: 20px; color: #aaa; cursor: pointer; font-weight: 600; display: block; }
+        .input-group { margin-bottom: 15px; text-align: left; }
+        input, textarea {
+            width: 100%; padding: 12px; border: 2px solid #ddd; 
+            border-radius: 8px; outline: none;
+        }
+
+        .v-msg { font-size: 11px; margin-top: 4px; font-weight: 700; display: block; }
+        .err { color: #ff0055; }
+        .ok { color: #2ecc71; }
+
+        .confirm-btn {
+            background: #2ecc71; color: white; border: none; padding: 15px;
+            width: 100%; border-radius: 10px; font-weight: 800; font-size: 18px;
+            cursor: pointer; opacity: 0.4; pointer-events: none;
+        }
+        .confirm-btn.active { opacity: 1; pointer-events: auto; }
     </style>
 </head>
 <body>
 
 <header>
-    <div class="welcome-msg">Apna Store Official</div>
-    <p class="quotation">"The ultimate destination for premium lifestyle products. Verified Quality."</p>
+    <div class="welcome-msg">Welcome to Apna Store</div>
+    <div class="tagline">🛒 Smart Deals Online</div>
+    <p class="quotation">"Best products, best prices. Your satisfaction is our priority."</p>
 </header>
 
-<div class="main-wrapper">
-    <div class="store-grid">
-        <div class="card">
-            <div class="card-img"><img src="https://i.ibb.co/dJ1j5x5N/ms-5sg2j-512-383857316.jpg"></div>
-            <div class="card-body">
-                <div class="card-title">Premium Slim Shirt</div>
-                <div class="card-price">₹299</div>
-                <button class="order-btn" onclick="openShop('Premium Slim Shirt')">BUY NOW</button>
-            </div>
+<div class="store-container">
+    <div class="product-card">
+        <div class="img-box"><img src="https://i.ibb.co/dJ1j5x5N/ms-5sg2j-512-383857316.jpg"></div>
+        <div class="content">
+            <h3>Premium Slim Shirt</h3>
+            <div class="p-price">₹299</div>
+            <button class="buy-btn" onclick="openForm('Premium Slim Shirt')">BUY NOW</button>
         </div>
-
-        <div class="card">
-            <div class="card-img"><img src="https://m.media-amazon.com/images/I/61Nl-XpLh7L._SL1500_.jpg"></div>
-            <div class="card-body">
-                <div class="card-title">Wireless Airbuds Z2</div>
-                <div class="card-price">₹499</div>
-                <button class="order-btn" onclick="openShop('Wireless Airbuds Z2')">BUY NOW</button>
-            </div>
+    </div>
+    <div class="product-card">
+        <div class="img-box"><img src="https://m.media-amazon.com/images/I/61Nl-XpLh7L._SL1500_.jpg"></div>
+        <div class="content">
+            <h3>Wireless Airbuds Z2</h3>
+            <div class="p-price">₹499</div>
+            <button class="buy-btn" onclick="openForm('Wireless Airbuds Z2')">BUY NOW</button>
         </div>
-
-        <div class="card">
-            <div class="card-img"><img src="https://m.media-amazon.com/images/I/71N-Wn7WlBL._SL1500_.jpg"></div>
-            <div class="card-body">
-                <div class="card-title">Luxury French Perfume</div>
-                <div class="card-price">₹399</div>
-                <button class="order-btn" onclick="openShop('Luxury French Perfume')">BUY NOW</button>
-            </div>
+    </div>
+    <div class="product-card">
+        <div class="img-box"><img src="https://m.media-amazon.com/images/I/71N-Wn7WlBL._SL1500_.jpg"></div>
+        <div class="content">
+            <h3>Luxury French Perfume</h3>
+            <div class="p-price">₹399</div>
+            <button class="buy-btn" onclick="openForm('Luxury French Perfume')">BUY NOW</button>
         </div>
-
-        <div class="card">
-            <div class="card-img"><img src="https://m.media-amazon.com/images/I/71o8Q5h93AL._SL1500_.jpg"></div>
-            <div class="card-body">
-                <div class="card-title">Men's Classic Watch</div>
-                <div class="card-price">₹599</div>
-                <button class="order-btn" onclick="openShop('Men\'s Classic Watch')">BUY NOW</button>
-            </div>
+    </div>
+    <div class="product-card">
+        <div class="img-box"><img src="https://m.media-amazon.com/images/I/71o8Q5h93AL._SL1500_.jpg"></div>
+        <div class="content">
+            <h3>Men's Classic Watch</h3>
+            <div class="p-price">₹599</div>
+            <button class="buy-btn" onclick="openForm('Men\'s Classic Watch')">BUY NOW</button>
         </div>
     </div>
 </div>
 
-<div id="orderOverlay">
-    <div class="form-container">
-        <h2 style="text-align:center; margin-bottom:25px; letter-spacing: -1px;">Verify Order Details</h2>
-        <form id="secureForm">
-            <input type="hidden" id="p_name" name="Selected_Product">
+<div id="orderModal">
+    <div class="modal-body">
+        <h2 style="text-align:center; margin-bottom:20px;">Shipping Details</h2>
+        <form id="orderForm">
+            <input type="hidden" id="p_name" name="Product">
 
-            <div class="field-group">
-                <label>Recipient Full Name</label>
-                <input type="text" id="v_name" name="Full_Name" placeholder="e.g., Rohit Kumar" oninput="verifyInputs()">
-                <span id="name_hint" class="hint"></span>
+            <div class="input-group">
+                <input type="text" id="v_name" name="Name" placeholder="Full Name (First & Last Name)" oninput="check()">
+                <span id="nameInfo" class="v-msg"></span>
             </div>
 
-            <div class="field-group">
-                <label>Detailed Delivery Address</label>
-                <textarea id="v_addr" name="Address" rows="3" placeholder="House No, Street, Landmark, City" oninput="verifyInputs()"></textarea>
-                <span id="addr_hint" class="hint"></span>
+            <div class="input-group">
+                <textarea id="v_addr" name="Address" rows="3" placeholder="Full Address (House No/Area/City)" oninput="check()"></textarea>
+                <span id="addrInfo" class="v-msg"></span>
             </div>
 
-            <div class="field-group">
-                <label>6-Digit PIN Code</label>
-                <input type="number" id="v_pin" name="Pincode" placeholder="XXXXXX" oninput="enforceLimit(this, 6); verifyInputs()">
-                <span id="pin_hint" class="hint"></span>
+            <div class="input-group">
+                <input type="number" id="v_pin" name="PIN" placeholder="6-digit PIN Code" oninput="limit(this, 6); check()">
+                <span id="pinInfo" class="v-msg"></span>
             </div>
 
-            <div class="field-group">
-                <label>10-Digit Mobile Number</label>
-                <input type="number" id="v_mob" name="Mobile" placeholder="XXXXXXXXXX" oninput="enforceLimit(this, 10); verifyInputs()">
-                <span id="mob_hint" class="hint"></span>
+            <div class="input-group">
+                <input type="number" id="v_mob" name="Mobile" placeholder="10-digit Mobile Number" oninput="limit(this, 10); check()">
+                <span id="mobInfo" class="v-msg"></span>
             </div>
 
-            <button type="button" id="finalSubmit" class="submit-btn" onclick="submitToEmail()">CONFIRM ORDER (COD)</button>
+            <button type="button" id="subBtn" class="confirm-btn" onclick="done()">CONFIRM ORDER</button>
         </form>
-        <span class="close-link" onclick="closeShop()">Cancel and go back</span>
+        <p style="text-align:center; margin-top:15px; color:#888; cursor:pointer;" onclick="closeForm()">Go Back</p>
     </div>
 </div>
 
 <script>
-    function openShop(item) { 
-        document.getElementById('p_name').value = item; 
-        document.getElementById('orderOverlay').style.display = 'block'; 
-    }
-    
-    function closeShop() { document.getElementById('orderOverlay').style.display = 'none'; }
-    
-    function enforceLimit(el, len) { if(el.value.length > len) el.value = el.value.slice(0, len); }
+    function openForm(n) { document.getElementById('p_name').value = n; document.getElementById('orderModal').style.display = 'block'; }
+    function closeForm() { document.getElementById('orderModal').style.display = 'none'; }
+    function limit(el, max) { if (el.value.length > max) el.value = el.value.slice(0, max); }
 
-    function verifyInputs() {
-        const nm = document.getElementById('v_name'), ad = document.getElementById('v_addr');
-        const pn = document.getElementById('v_pin'), mb = document.getElementById('v_mob');
-        const btn = document.getElementById('finalSubmit');
+    function check() {
+        const n = document.getElementById('v_name'), a = document.getElementById('v_addr');
+        const p = document.getElementById('v_pin'), m = document.getElementById('v_mob');
+        const btn = document.getElementById('subBtn');
 
-        // New Logic: Name must have 2 parts (First Last) and No Junk like 'aaa'
-        const isNameValid = nm.value.trim().split(' ').length >= 2 && !/^(.)\1+$/.test(nm.value.trim());
-        
-        // New Logic: Address must have house number (digit) and city/area details
-        const isAddrValid = ad.value.trim().length >= 20 && /\d/.test(ad.value);
+        const isN = n.value.trim().includes(' ') && !/^(.)\1+$/.test(n.value.trim());
+        const isA = a.value.trim().length >= 25 && /\d/.test(a.value);
+        const isP = p.value.length === 6 && !/123456|000000/.test(p.value);
+        const isM = m.value.length === 10 && !/1234567890/.test(m.value);
 
-        // New Logic: PIN & Mobile can't be common fake patterns
-        const fakeCheck = /^(.)\1{5,}$|123456|012345/;
-        const isPinValid = pn.value.length === 6 && !fakeCheck.test(pn.value);
-        
-        const fakeMob = /^(.)\1{9,}$|1234567890|0123456789/;
-        const isMobValid = mb.value.length === 10 && !fakeMob.test(mb.value);
+        update('nameInfo', isN, "Verified", "Full Name Required", n);
+        update('addrInfo', isA, "Verified", "Detailed Address Required (Min 25 chars)", a);
+        update('pinInfo', isP, "Valid PIN", "Invalid PIN Code", p);
+        update('mobInfo', isM, "Valid Number", "Invalid Mobile Number", m);
 
-        showFeedback('name_hint', isNameValid, "Name Verified", "Full Name required (First & Last)", nm);
-        showFeedback('addr_hint', isAddrValid, "Address Verified", "Detailed address required (House No. / City)", ad);
-        showFeedback('pin_hint', isPinValid, "PIN Verified", "Enter a valid 6-digit PIN", pn);
-        showFeedback('mob_hint', isMobValid, "Number Verified", "Enter a valid 10-digit Number", mb);
-
-        if(isNameValid && isAddrValid && isPinValid && isMobValid) btn.classList.add('ready');
-        else btn.classList.remove('ready');
+        if(isN && isA && isP && isM) btn.classList.add('active');
+        else btn.classList.remove('active');
     }
 
-    function showFeedback(id, ok, sMsg, eMsg, input) {
+    function update(id, ok, s, e, input) {
         const el = document.getElementById(id);
-        if(input.value === "") { el.innerHTML = ""; input.style.borderColor = "#f0f0f0"; return; }
-        if(ok) {
-            el.innerHTML = "✓ " + sMsg; el.className = "hint msg-success"; input.style.borderColor = "#00c853";
-        } else {
-            el.innerHTML = "⚠ " + eMsg; el.className = "hint msg-error"; input.style.borderColor = "#e91e63";
-        }
+        if(input.value === "") { el.innerHTML = ""; input.style.borderColor = "#ddd"; return; }
+        if(ok) { el.innerHTML = "✓ " + s; el.className = "v-msg ok"; input.style.borderColor = "#2ecc71"; }
+        else { el.innerHTML = "⚠ " + e; el.className = "v-msg err"; input.style.borderColor = "#ff0055"; }
     }
 
-    function submitToEmail() {
-        alert("Verification Success! Your order is being processed.");
-        const form = document.getElementById('secureForm');
-        form.action = "https://formspree.io/f/mreebzpa";
-        form.method = "POST";
-        form.submit();
+    function done() {
+        alert("Order Placed!");
+        const f = document.getElementById('orderForm');
+        f.action = "https://formspree.io/f/mreebzpa";
+        f.method = "POST";
+        f.submit();
     }
 </script>
 </body>
